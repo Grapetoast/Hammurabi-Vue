@@ -31,6 +31,13 @@
         <h1 class="title">Game Mode</h1>
         <button class="3000" v-on:click="newGame(false)">Hammurabi 3000</button>
         <button class="classic" v-on:click="newGame(true)">Classic Hammurabi</button>
+        <div class="slider">
+          <div class="leftButton" v-on:click="sliderLeft">&#10094;</div>
+          <div v-bind:class="easy">Easy</div>
+          <div v-bind:class="normal">Normal</div>
+          <div v-bind:class="hard">Hard</div>
+          <div class="rightButton" v-on:click="sliderRight">&#10095;</div>
+        </div>
       </div>
     </transition>
   </div>
@@ -46,7 +53,39 @@ export default {
       options: false,
       loadMenu: false,
       gameModeMenu: false,
+      gameDifficulty: 'easy',
+      difficultyDirection: '',
       saves: [{name: 'save1', time: '1122pm', classic: true}]
+    }
+  },
+  computed: {
+    easy: function () {
+      return {
+        hidden: (this.gameDifficulty === 'hard' && this.difficultyDirection === 'right') || (this.gameDifficulty === 'normal' && this.difficultyDirection === 'left'),
+        centerSlider: this.gameDifficulty === 'easy' && this.difficultyDirection === '',
+        leftSliderCenter: this.gameDifficulty === 'easy' && this.difficultyDirection === 'left',
+        rightSliderCenter: this.gameDifficulty === 'easy' && this.difficultyDirection === 'right',
+        centerSliderleft: this.gameDifficulty === 'normal' && this.difficultyDirection === 'right',
+        centerSliderRight: this.gameDifficulty === 'hard' && this.difficultyDirection === 'left'
+      }
+    },
+    normal: function () {
+      return {
+        hidden: (this.gameDifficulty === 'easy' && this.difficultyDirection === '') || (this.gameDifficulty === 'easy' && this.difficultyDirection === 'right') || (this.gameDifficulty === 'hard' && this.difficultyDirection === 'left'),
+        leftSliderCenter: this.gameDifficulty === 'normal' && this.difficultyDirection === 'left',
+        rightSliderCenter: this.gameDifficulty === 'normal' && this.difficultyDirection === 'right',
+        centerSliderleft: this.gameDifficulty === 'hard' && this.difficultyDirection === 'right',
+        centerSliderRight: this.gameDifficulty === 'easy' && this.difficultyDirection === 'left'
+      }
+    },
+    hard: function () {
+      return {
+        hidden: (this.gameDifficulty === 'easy' && this.difficultyDirection === '') || (this.gameDifficulty === 'normal' && this.difficultyDirection === 'right') || (this.gameDifficulty === 'easy' && this.difficultyDirection === 'left'),
+        leftSliderCenter: this.gameDifficulty === 'hard' && this.difficultyDirection === 'left',
+        rightSliderCenter: this.gameDifficulty === 'hard' && this.difficultyDirection === 'right',
+        centerSliderleft: this.gameDifficulty === 'easy' && this.difficultyDirection === 'right',
+        centerSliderRight: this.gameDifficulty === 'normal' && this.difficultyDirection === 'left'
+      }
     }
   },
   methods: {
@@ -91,6 +130,30 @@ export default {
     optionsToggle: function () {
       this.options = !this.options
       this.menu = !this.menu
+    },
+    sliderLeft: function () {
+      this.difficultyDirection = 'left'
+      if (this.gameDifficulty === 'easy') {
+        this.gameDifficulty = 'hard'
+      }
+      else if (this.gameDifficulty === 'normal') {
+        this.gameDifficulty = 'easy'
+      }
+      else if (this.gameDifficulty === 'hard') {
+        this.gameDifficulty = 'normal'
+      }
+    },
+    sliderRight: function () {
+      this.difficultyDirection = 'right'
+      if (this.gameDifficulty === 'easy') {
+        this.gameDifficulty = 'normal'
+      }
+      else if (this.gameDifficulty === 'normal') {
+        this.gameDifficulty = 'hard'
+      }
+      else if (this.gameDifficulty === 'hard') {
+        this.gameDifficulty = 'easy'
+      }
     }
   }
 }
@@ -172,4 +235,89 @@ export default {
   .switch-enter, .switch-leave-to {
     opacity: 0;
   }
+
+  .slider {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 80px;
+    width: 80%;
+    height: 80px;
+    text-align: center;
+    line-height: 80px;
+    margin-left: 10%;
+    margin-top: 20px;
+    border-radius: 14px;
+    font-size: 1.5em;
+    background-color: @backgroundColor;
+  }
+
+  .leftButton {
+    grid-column: 1;
+    grid-row: 1;
+    z-index: 3;
+  }
+
+  .rightButton {
+    grid-column: 3;
+    grid-row: 1;
+    z-index: 3;
+  }
+
+  .centerSlider {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  @keyframes leftSlideCenter {
+    0% {grid-column: 1; opacity: 0; grid-row: 1;}
+    100% {grid-column: 2; opacity: 1; grid-row: 1;}
+  }
+
+  .leftSliderCenter {
+    animation-name: leftSlideCenter;
+    animation-duration: .8s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes rightSlideCenter {
+    0% {grid-column: 3; opacity: 0; grid-row: 1;}
+    100% {grid-column: 2; opacity: 1; grid-row: 1;}
+  }
+
+  .rightSliderCenter {
+    animation-name: rightSlideCenter;
+    animation-duration: .8s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes centerSlideLeft {
+    0% {grid-column: 2; opacity: 1; grid-row: 1;}
+    100% {grid-column: 1; opacity: 0; grid-row: 1;}
+  }
+
+  .centerSliderleft {
+    animation-name: centerSlideLeft;
+    animation-duration: .8s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes centerSlideRight {
+    0% {grid-column: 2; opacity: 1; grid-row: 1;}
+    100% {grid-column: 3; opacity: 0; grid-row: 1;}
+  }
+
+  .centerSliderRight {
+    animation-name: centerSlideRight;
+    animation-duration: .8s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+
 </style>
