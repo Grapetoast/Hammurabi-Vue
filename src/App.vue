@@ -1,6 +1,6 @@
 <template>
   <!-- Don't drop "q-app" class -->
-  <div id="q-app">
+  <div id="q-app" class="main">
     <router-view v-on:newGame="newGame" v-on:loadGame="loadGame" v-on:toggleAudio="toggleAudio" v-on:toggleMusic="toggleMusic" :beaten="beaten" :audio="audio" :music="music" :classic="classic" :game="game" />
   </div>
 </template>
@@ -44,4 +44,15 @@ export default {
 </script>
 
 <style scoped lang="less">
+  .main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('./assets/BackgroundMobile.png');
+    background-size: 100%;
+  }
 </style>

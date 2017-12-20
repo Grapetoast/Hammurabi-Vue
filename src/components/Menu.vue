@@ -91,9 +91,14 @@ export default {
 <style scoped lang="less">
   @backgroundColor: #7071b5;
   @accentColor: #29005d;
+  .main {
+    height: 100%;
+    width: 100%;
+  }
 
   .title {
     text-align: center;
+    color: #fff;
     width: 80%;
     font-size: 2.4em;
     margin-left: 10%;

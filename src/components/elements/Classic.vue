@@ -1,5 +1,7 @@
 <template>
-  <div>classic</div>
+  <div class="main">
+    <h1 class="title">Classic Hammurabi</h1>
+  </div>
 </template>
 
 <script>
@@ -12,4 +14,8 @@ export default {
 </script>
 
 <style scoped lang="less">
+  .title {
+    color: #fff;
+    font-size: 2.4em;
+  }
 </style>
