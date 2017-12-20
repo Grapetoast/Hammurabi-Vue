@@ -8,20 +8,20 @@
       <div class="box b">
         <div class="report">
           <strong>Overlord Hammurabi</strong>: I beg to report to you,
-          <span class="plague">An enemy incursion has swept over your demense! <strong><span class="plagueNumber">0</span> Citizens have perished!!</strong></span>
-          In the <strong>Year <span class="year">3001</span></strong>,
-          <strong><span class="starved">0</span></strong> civilians starved.
-          <strong><span class="immigrants">5</span></strong> civilians came to the city.
-          The Dominion population is now <strong><span class="population">100</span></strong>.
-          The Dominion now owns <strong><span class="land">1000</span></strong> quadrants.
-          You harvested <strong><span class="harvest">3</span></strong> rations per quadrant.
-          Space crabs ate <strong><span class="spaceCrabs">200</span></strong> rations.
-          You now have <strong><span class="rationsStore">2800</span></strong> rations in store.
-          Space is trading at <strong><span class="landTrade">22</span></strong> rations per quadrant.</br>
+          <span v-if="plague">An enemy incursion has swept over your demense! <strong><span class="plagueNumber">{{this.plagueNumber}}</span> Citizens have perished!!</strong></span>
+          In the <strong>Year <span class="year">{{this.year}}</span></strong>,
+          <strong><span class="starved">{{this.starved}}</span></strong> civilians starved.
+          <strong><span class="immigrants">{{this.immigrants}}</span></strong> civilians came to the city.
+          The Dominion population is now <strong><span class="population">{{this.population}}</span></strong>.
+          The Dominion now owns <strong><span class="land">{{this.land}}</span></strong> quadrants.
+          You harvested <strong><span class="harvest">{{this.harvest}}</span></strong> rations per quadrant.
+          Space crabs ate <strong><span class="spaceCrabs">{{this.spaceCrabs}}</span></strong> rations.
+          You now have <strong><span class="rationsStore">{{this.rationsStore}}</span></strong> rations in store.
+          Space is trading at <strong><span class="landTrade">{{this.landTrade}}</span></strong> rations per quadrant.</br>
         </div>
       </div>
       <div class="count c">
-        <span class="borderCounter"><span class="rationCounter"><strong>2800</strong></span> rations remain!</span>
+        <span class="borderCounter"><span class="rationCounter"><strong>{{this.rationCounter}}</strong></span> rations remain!</span>
       </div>
       <div class="box d">
         <div class="input">
@@ -32,26 +32,26 @@
       </div>
       <div class="box e">
         <div class="btn">
-        <button class="startNew">New Game</button>
+        <button>Back To Menu</button>
         <button class="makeItSo">Make it So!</button>
         </div>
       </div>
       <div class="box f">
         <center>
-        <div class="winScreen">
+        <div v-if="winScreen">
           <img src="../assets/YOU_WIN.png" class="youWin"/>
         </div>
         </center>
       </div>
       <div class="box g">
         <center>
-        <div class="failScreen">
+        <div v-if="failScreen">
           <img src="../assets/YOU_LOSE.png" class="youFail"/>
         </div>
         </center>
       </div>
       <div class="box h">
-        <div class="endReport">
+        <div v-if="endReport">
           Starved = <span class="starvedTotal">0</span>
           SpacePerCiv = <span class="landRatio">10</span>
           You earned <span class="points">0</span> points!
@@ -83,7 +83,8 @@ export default {
       rations: 2800,
       starvedTotal: 0,
       points: 0,
-      landRatio: 10
+      landRatio: 10,
+      rationCounter: 2800
     }
   },
   methods: {
@@ -333,23 +334,6 @@ button:hover {
   background-color: @background-color;
 
 }
-
-.fink {
-  display: inline;
-}
-
-.meh {
-  display: none;
-}
-
-.good {
-  display: none;
-}
-
-.best {
-  display: none;
-}
-
 /* EndScreen end*/
 //mobile support
 @media screen and (max-width:760){
