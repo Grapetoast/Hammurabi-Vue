@@ -55,7 +55,7 @@ export default {
       gameModeMenu: false,
       gameDifficulty: 'easy',
       difficultyDirection: '',
-      saves: [{name: 'save1', time: '1122pm', classic: true}]
+      saves: [{name: 'save1', time: '1122pm', classic: true, gameDifficulty: 'easy'}]
     }
   },
   computed: {
@@ -94,10 +94,11 @@ export default {
         this.gameModeMenuToggle()
       }
       else if (classic === true || classic === false) {
-        this.$emit('newGame', classic)
+        let x = [{classic: classic, difficulty: this.gameDifficulty}]
+        this.$emit('newGame', x)
       }
       else {
-        this.$emit('newGame')
+        this.$emit('newGame', [{difficulty: this.gameDifficulty}])
       }
     },
     gameModeMenuToggle: function () {
@@ -105,7 +106,7 @@ export default {
       this.menu = !this.menu
     },
     loadGame: function (save) {
-      let saveData = [{name: save.name, time: save.time, classic: save.classic}]
+      let saveData = [{name: save.name, time: save.time, classic: save.classic, difficulty: save.gameDifficulty}]
       this.$emit('loadGame', saveData)
     },
     loadMenuToggle: function () {
