@@ -46,7 +46,7 @@
 <script>
 export default {
   name: 'gamemenu',
-  props: ['audio', 'music', 'beaten'],
+  props: ['audio', 'music', 'beaten', 'saves'],
   data () {
     return {
       menu: true,
@@ -54,8 +54,7 @@ export default {
       loadMenu: false,
       gameModeMenu: false,
       gameDifficulty: 'easy',
-      difficultyDirection: '',
-      saves: [{name: 'save1', time: '1122pm', classic: true, gameDifficulty: 'easy'}]
+      difficultyDirection: ''
     }
   },
   computed: {
@@ -187,7 +186,7 @@ export default {
     margin-top: 120px;
   }
 
-  .save {
+  .save:first-of-type {
     margin-top: 120px;
   }
 
