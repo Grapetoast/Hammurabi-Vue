@@ -54,5 +54,6 @@ export default {
     height: 100vh;
     background-image: url('./assets/BackgroundMobile.png');
     background-size: 100%;
+    background-repeat: no-repeat;
   }
 </style>
