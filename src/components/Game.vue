@@ -10,7 +10,7 @@ import ThreeThousand from './elements/3000'
 import Classic from './elements/Classic'
 export default {
   name: 'game',
-  props: ['classic', 'game'],
+  props: ['classic', 'game', 'difficulty'],
   components: {
     'threethousand': ThreeThousand,
     'classicmode': Classic
