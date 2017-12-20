@@ -24,6 +24,7 @@ export default {
   }
 
   .title {
+    text-align: center;
     font-size: 2.4em;
   }
 </style>

@@ -15,6 +15,7 @@ export default {
 
 <style scoped lang="less">
   .title {
+    text-align: center;
     color: #fff;
     font-size: 2.4em;
   }
