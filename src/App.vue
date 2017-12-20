@@ -1,7 +1,9 @@
 <template>
   <!-- Don't drop "q-app" class -->
   <div id="q-app" class="main">
-    <router-view v-on:newGame="newGame" v-on:loadGame="loadGame" v-on:toggleAudio="toggleAudio" v-on:toggleMusic="toggleMusic" :beaten="beaten" :audio="audio" :music="music" :classic="classic" :game="game" />
+    <transition name="fade">
+      <router-view v-on:newGame="newGame" v-on:loadGame="loadGame" v-on:toggleAudio="toggleAudio" v-on:toggleMusic="toggleMusic" :beaten="beaten" :audio="audio" :music="music" :classic="classic" :game="game" />
+    </transition>
   </div>
 </template>
 
@@ -55,5 +57,18 @@ export default {
     background-image: url('./assets/BackgroundMobile.png');
     background-size: 100%;
     background-repeat: no-repeat;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition-property: opacity;
+    transition-duration: .25s;
+  }
+
+  .fade-enter-active {
+    transition-delay: .25s;
+  }
+
+  .fade-enter, .fade-leave-active {
+    opacity: 0;
   }
 </style>

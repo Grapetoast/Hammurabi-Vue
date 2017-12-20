@@ -1,30 +1,38 @@
 <template>
   <div class="main">
-    <div class="menu" v-if="menu">
-      <h1 class="title">Hammurabi 3000</h1>
-      <button class="newGame" v-on:click="newGame">New Game</button>
-      <button class="loadGame" v-on:click="loadMenuToggle">Load Game</button>
-      <button class="options" v-on:click="optionsToggle">Options</button>
-      <button class="screenArtGames" v-on:click="screenArtGames">Screen Art Games</button>
-    </div>
-    <div class="optionsPane" v-if="options">
-      <h1 class="title">Options</h1>
-      <button class="audio" v-if="audio" v-on:click="muteAudio">Mute Audio</button>
-      <button class="audio" v-if="!audio" v-on:click="unmuteAudio">Unmute Audio</button>
-      <button class="music" v-if="music" v-on:click="muteMusic">Mute Music</button>
-      <button class="music" v-if="!music" v-on:click="unmuteMusic">Unmute Music</button>
-      <button class="back" v-on:click="optionsToggle">Back</button>
-    </div>
-    <div class="loadMenu" v-if="loadMenu">
-      <h1 class="title">Saves</h1>
-      <button v-for="save in saves" v-on:click="loadGame(save)">{{save.name}}:{{save.time}}</button>
-      <button class="back" v-on:click="loadMenuToggle">Back</button>
-    </div>
-    <div class="gameModeMenu" v-if="gameModeMenu">
-      <h1 class="title">Game Mode</h1>
-      <button class="3000" v-on:click="newGame(false)">Hammurabi 3000</button>
-      <button class="classic" v-on:click="newGame(true)">Classic Hammurabi</button>
-    </div>
+    <transition name="fade">
+      <div class="menu" v-if="menu">
+        <h1 class="title">Hammurabi 3000</h1>
+        <button class="newGame" v-on:click="newGame">New Game</button>
+        <button class="loadGame" v-on:click="loadMenuToggle">Load Game</button>
+        <button class="options" v-on:click="optionsToggle">Options</button>
+        <button class="screenArtGames" v-on:click="screenArtGames">Screen Art Games</button>
+      </div>
+    </transition>
+    <transition name="fade">
+      <div class="optionsPane" v-if="options">
+        <h1 class="title">Options</h1>
+        <button class="audio" v-if="audio" v-on:click="muteAudio">Mute Audio</button>
+        <button class="audio" v-if="!audio" v-on:click="unmuteAudio">Unmute Audio</button>
+        <button class="music" v-if="music" v-on:click="muteMusic">Mute Music</button>
+        <button class="music" v-if="!music" v-on:click="unmuteMusic">Unmute Music</button>
+        <button class="back" v-on:click="optionsToggle">Back</button>
+      </div>
+    </transition>
+    <transition name="fade">
+      <div class="loadMenu" v-if="loadMenu">
+        <h1 class="title">Saves</h1>
+        <button class="save" v-for="save in saves" v-on:click="loadGame(save)">{{save.name}}:{{save.time}}</button>
+        <button class="back" v-on:click="loadMenuToggle">Back</button>
+      </div>
+    </transition>
+    <transition name="fade">
+      <div class="gameModeMenu" v-if="gameModeMenu">
+        <h1 class="title">Game Mode</h1>
+        <button class="3000" v-on:click="newGame(false)">Hammurabi 3000</button>
+        <button class="classic" v-on:click="newGame(true)">Classic Hammurabi</button>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -99,10 +107,32 @@ export default {
   .title {
     text-align: center;
     color: #fff;
-    width: 80%;
+    width: 100%;
     font-size: 2.4em;
-    margin-left: 10%;
-    margin-top: 20px;
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+  }
+
+  .newGame {
+    margin-top: 120px;
+  }
+
+  .gameModeMenu {
+    margin-top: 120px;
+  }
+
+  .save {
+    margin-top: 120px;
+  }
+
+  .audio {
+    margin-top: 120px;
+  }
+
+  .music {
+
   }
 
   button {
@@ -115,5 +145,31 @@ export default {
     margin-top: 20px;
     border-radius: 14px;
     background-color: @backgroundColor;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition-property: opacity;
+    transition-duration: .16s;
+  }
+
+  .fade-enter-active {
+    transition-delay: .16s;
+  }
+
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+
+  .switch-enter-active, .switch-leave-active {
+    transition-property: opacity;
+    transition-duration: .16s;
+  }
+
+  .switch-enter-active {
+    transition-delay: .16s;
+  }
+
+  .switch-enter, .switch-leave-to {
+    opacity: 0;
   }
 </style>
