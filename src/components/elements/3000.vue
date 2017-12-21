@@ -55,7 +55,12 @@ export default {
       report: true,
       resource: false,
       input: false,
-      makeItSo: false
+      makeItSo: false,
+      inputs: {
+        landBuy: '',
+        rationFeed: '',
+        inseminated: ''
+      }
     }
   },
   methods: {
