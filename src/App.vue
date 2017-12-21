@@ -2,7 +2,7 @@
   <!-- Don't drop "q-app" class -->
   <div id="q-app" class="main">
     <transition name="fade">
-      <router-view v-on:newGame="newGame" v-on:loadGame="loadGame" v-on:toggleAudio="toggleAudio" v-on:toggleMusic="toggleMusic" :beaten="beaten" :audio="audio" :music="music" :classic="classic" :game="game" :difficulty="gameDifficulty"/>
+      <router-view v-on:newGame="newGame" v-on:saveGame="saveGame" v-on:loadGame="loadGame" v-on:toggleAudio="toggleAudio" v-on:toggleMusic="toggleMusic" :saves="saves" :beaten="beaten" :audio="audio" :music="music" :classic="classic" :game="game" :difficulty="gameDifficulty"/>
     </transition>
   </div>
 </template>
@@ -16,7 +16,8 @@ export default {
       music: true,
       classic: false,
       gameDifficulty: 'easy',
-      game: []
+      game: [],
+      saves: [{name: 'save1', time: '1122pm', classic: true, gameDifficulty: 'easy'}]
     }
   },
   methods: {
@@ -30,9 +31,12 @@ export default {
       if (x[0].difficulty === 'easy' || x[0].difficulty === 'normal' || x[0].difficulty === 'hard') {
         this.gameDifficulty = x[0].difficulty
       }
-      console.log(this.classic + this.gameDifficulty)
-      console.log(x)
       this.$router.push('/game')
+    },
+    saveGame: function (gameData) {
+      this.saves.push({name: gameData.name, time: gameData.time, classic: gameData.classicMode, gameDifficulty: gameData.gameDifficulty, population: gameData.population, land: gameData.land, store: gameData.store, year: gameData.year, starved: gameData.starved, rats: gameData.rats, landRate: gameData.landRate, immigrants: gameData.immigrants, bushelsPerAcre: gameData.bushelsPerAcre})
+      console.log(this.saves)
+      this.$router.push('/')
     },
     loadGame: function (game) {
       if (game !== null) {
