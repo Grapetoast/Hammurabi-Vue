@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: '3000peasant',
+  name: 'threeThousandPeasant',
   data () {
     return {}
   }

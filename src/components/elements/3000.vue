@@ -22,14 +22,19 @@
       <span class="question">How many rations do you wish to feed your citizens?</span> </br><textarea placeholder="each citizen needs 20/year" class="food" rows="1" cols="25" type="number"></textarea></br>
       <span class="question">How many quadrants do you wish to inseminate?</span> </br><textarea placeholder="quadrant = 1ration" class="plant" rows="1" cols="25" type="number"></textarea>
     </div>
+    <threeThousandPeasant></threeThousandPeasant>
     <button v-if="makeItSo" v-on:click="">Make It So!</button>
     <button class="quit">Quit Game</button>
   </div>
 </template>
 
 <script>
+import ThreeThousandPeasant from './ThreeThousandPeasant'
 export default {
-  name: 'threethousand',
+  name: '3000',
+  components: {
+    'threeThousandPeasant': ThreeThousandPeasant
+  },
   data () {
     return {
       year: 3001,
