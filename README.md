@@ -5,6 +5,11 @@
  ## Build Setup
 
  ``` bash
+# change directory (cd) into the root directory then into Hammurabi-Vue
+# (copy path from atom by right clicking a folder and clicking "copy full path")
+$ cd /
+$ cd (paste path here)
+
  # install quasar *must have admin permissions*
  $ npm install -g quasar-cli
 
@@ -33,13 +38,13 @@
  $ cordova platform add ios
  $ cordova platform add android
 
- # Emulate to platform *must quasar build first*
- $ cordova emulate ios
- $ cordova emulate android
-
  # Build version *must quasar build first*
  $ cordova build android
  $ cordova build ios
+
+ # Emulate to platform *must quasar build first*
+ $ cordova emulate ios
+ $ cordova emulate android
 
  # Run on connected device or emulator *must sign in to device and give computer permissions, as well android must be in developer mode*
  $ cordova run android
