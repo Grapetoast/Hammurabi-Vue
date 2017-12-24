@@ -8,7 +8,7 @@
 # change directory (cd) into the root directory then into Hammurabi-Vue
 # (copy path from atom by right clicking a folder and clicking "copy full path")
 $ cd /
-$ cd (paste path here)
+$ cd (paste path here *command + v on mac* *right click on windows*)
 
  # install quasar *must have admin permissions*
  $ npm install -g quasar-cli
