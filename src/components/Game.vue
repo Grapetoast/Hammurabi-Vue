@@ -1,7 +1,7 @@
 <template>
   <div class="main">
-    <threethousand v-if="!classic" :year="gameData.year" :starved="gameData.starved" :immigrants="gameData.immigrants" :population="gameData.population" :land="gameData.land" :rationsPerQuadrant="gameData.bushelsPerAcre" :spaceCrabs="gameData.rats" :store="gameData.store" :quadrantRate="gameData.landRate"></threethousand>
-    <classicmode v-if="classic" v-on:saveGame="saveGame" v-on:turnChange="turnChange" :year="gameData.year" :starved="gameData.starved" :immigrants="gameData.immigrants" :population="gameData.population" :land="gameData.land" :bushelsPerAcre="gameData.bushelsPerAcre" :rats="gameData.rats" :store="gameData.store" :landRate="gameData.landRate"></classicmode>
+    <threethousand v-if="!classic" v-on:saveGame="saveGame" v-on:turnChange="turnChange" :year="gameData.year" :starved="gameData.starved" :immigrants="gameData.immigrants" :population="gameData.population" :land="gameData.land" :harvest="gameData.harvest" :bushelsPerAcre="gameData.bushelsPerAcre" :rats="gameData.rats" :store="gameData.store" :landRate="gameData.landRate"></threethousand>
+    <classicmode v-if="classic" v-on:saveGame="saveGame" v-on:turnChange="turnChange" :year="gameData.year" :starved="gameData.starved" :immigrants="gameData.immigrants" :population="gameData.population" :land="gameData.land" :harvest="gameData.harvest" :bushelsPerAcre="gameData.bushelsPerAcre" :rats="gameData.rats" :store="gameData.store" :landRate="gameData.landRate"></classicmode>
   </div>
 </template>
 
@@ -29,6 +29,7 @@ export default {
         land: 1000,
         bushelsPerAcre: 3,
         rats: 200,
+        harvest: 2000,
         store: 2800,
         landRate: 26,
         classicMode: false,

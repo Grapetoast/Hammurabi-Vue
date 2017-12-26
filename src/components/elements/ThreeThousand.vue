@@ -8,8 +8,8 @@
         In the <strong>Year <span class="year">{{this.year}}</span></strong>,
         <strong><span class="starved">{{this.starved}}</span></strong> civilians starved.
         <strong><span class="immigrants">{{this.immigrants}}</span></strong> civilians came to the city.
-        You harvested <strong><span class="harvest">{{this.harvest}}</span></strong> rations per quadrant.
-        Space crabs ate <strong><span class="spaceCrabs">{{this.spaceCrabs}}</span></strong> rations.<br/>
+        You harvested {{this.harvest}} rations at a rate of {{this.bushelsPerAcre}} rations per quadrant.
+        Space crabs ate <strong><span class="spaceCrabs">{{this.rats}}</span></strong> rations.<br/>
         <button v-on:click="next">Next</button>
       </div><br/>
     </transition>
@@ -17,8 +17,8 @@
       <div class="resource" v-if="resource">
         <div class="population">Population: {{this.population}}</div>
         <div class="land">Land: {{this.land}}</div>
-        <div class="rations">Rations: {{this.rations}}</div>
-        <div class="landTrade">Landtrade: {{this.landTrade}}</div>
+        <div class="rations">Rations: {{this.store}}</div>
+        <div class="landTrade">Landtrade: {{this.landRate}}</div>
       </div>
     </transition>
     <transition name="fade">
@@ -50,28 +50,14 @@
 <script>
 import ThreeThousandPeasant from './ThreeThousandPeasant'
 export default {
-  name: '3000',
-  props: [ 'year', 'starved', 'immigrants', 'population', 'land', 'bushelsPerAcre', 'rats', 'store', 'landRate' ],
+  name: 'threethousand',
+  props: [ 'year', 'starved', 'immigrants', 'population', 'land', 'harvest', 'bushelsPerAcre', 'rats', 'store', 'landRate' ],
   components: {
     'threeThousandPeasant': ThreeThousandPeasant
   },
   data () {
     return {
-      year: 3001,
-      starved: 0,
-      immigrants: 5,
-      population: 100,
-      land: 1000,
-      harvest: 3,
-      spaceCrabs: 200,
-      rationsStore: 2800,
-      landTrade: 22,
-      rations: 2800,
-      starvedTotal: 0,
-      points: 0,
-      landRatio: 10,
-      rationCounter: 2800,
-      plagueNumber: 0,
+      plague: false,
       report: true,
       resource: false,
       input: false,

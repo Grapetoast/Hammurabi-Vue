@@ -7,7 +7,7 @@
       {{this.immigrants}} people came to the city.
       The city population is now {{this.population}}.
       The city now owns {{this.land}} acres.
-      You harvested {{this.bushelsPerAcre}} bushels per acre.
+      You harvested {{this.harvest}} bushels at a rate of {{this.bushelsPerAcre}} bushels per acre.
       Rats ate {{this.rats}} bushels.
       You now have {{this.store}} bushels in store.
       Land is trading at {{this.landRate}} bushels per acre.
@@ -47,7 +47,7 @@
 <script>
 export default {
   name: 'classic',
-  props: [ 'year', 'starved', 'immigrants', 'population', 'land', 'bushelsPerAcre', 'rats', 'store', 'landRate' ],
+  props: [ 'year', 'starved', 'immigrants', 'population', 'land', 'harvest', 'bushelsPerAcre', 'rats', 'store', 'landRate' ],
   data () {
     return {
       name: '',
