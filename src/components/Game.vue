@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import ThreeThousand from './elements/3000'
+import ThreeThousand from './elements/ThreeThousand'
 import Classic from './elements/Classic'
 export default {
   name: 'game',

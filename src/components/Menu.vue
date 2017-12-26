@@ -238,7 +238,7 @@ export default {
 
   .slider {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     grid-template-rows: 80px;
     width: 80%;
     height: 80px;
@@ -247,7 +247,7 @@ export default {
     margin-left: 10%;
     margin-top: 20px;
     border-radius: 14px;
-    font-size: 1.5em;
+    font-size: 1em;
     background-color: @backgroundColor;
   }
 
@@ -258,13 +258,13 @@ export default {
   }
 
   .rightButton {
-    grid-column: 3;
+    grid-column: 5;
     grid-row: 1;
     z-index: 3;
   }
 
   .centerSlider {
-    grid-column: 2;
+    grid-column: 3;
     grid-row: 1;
   }
 
@@ -273,8 +273,8 @@ export default {
   }
 
   @keyframes leftSlideCenter {
-    0% {grid-column: 1; opacity: 0; grid-row: 1;}
-    100% {grid-column: 2; opacity: 1; grid-row: 1;}
+    0% {grid-column: 2; opacity: 0; grid-row: 1;}
+    100% {grid-column: 3; opacity: 1; grid-row: 1;}
   }
 
   .leftSliderCenter {
@@ -285,8 +285,8 @@ export default {
   }
 
   @keyframes rightSlideCenter {
-    0% {grid-column: 3; opacity: 0; grid-row: 1;}
-    100% {grid-column: 2; opacity: 1; grid-row: 1;}
+    0% {grid-column: 4; opacity: 0; grid-row: 1;}
+    100% {grid-column: 3; opacity: 1; grid-row: 1;}
   }
 
   .rightSliderCenter {
@@ -297,8 +297,8 @@ export default {
   }
 
   @keyframes centerSlideLeft {
-    0% {grid-column: 2; opacity: 1; grid-row: 1;}
-    100% {grid-column: 1; opacity: 0; grid-row: 1;}
+    0% {grid-column: 3; opacity: 1; grid-row: 1;}
+    100% {grid-column: 2; opacity: 0; grid-row: 1;}
   }
 
   .centerSliderleft {
@@ -309,8 +309,8 @@ export default {
   }
 
   @keyframes centerSlideRight {
-    0% {grid-column: 2; opacity: 1; grid-row: 1;}
-    100% {grid-column: 3; opacity: 0; grid-row: 1;}
+    0% {grid-column: 3; opacity: 1; grid-row: 1;}
+    100% {grid-column: 4; opacity: 0; grid-row: 1;}
   }
 
   .centerSliderRight {
