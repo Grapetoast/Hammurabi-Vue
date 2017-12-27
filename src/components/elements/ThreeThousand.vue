@@ -16,19 +16,26 @@
     <transition name="fade">
       <div class="resource" v-if="resource">
         <div class="population">Population: {{this.population}}</div>
-        <div class="land">Land: {{this.land}}</div>
-        <div class="rations">Rations: {{this.store}}</div>
+        <div class="land">Land: {{this.activeLand}}</div>
+        <div class="rations">Rations: {{this.activeStore}}</div>
         <div class="landTrade">Landtrade: {{this.landRate}}</div>
       </div>
     </transition>
     <transition name="fade">
-    <div class="input" v-if="input">
-      <span class="question">How many quadrants do you wish to appropriate?</span> </br><textarea placeholder="enter negative to barter" class="landBuy" rows="1" cols="25" type="number"></textarea></br>
-      <span class="question">How many rations do you wish to feed your citizens?</span> </br><textarea placeholder="each citizen needs 20/year" class="food" rows="1" cols="25" type="number"></textarea></br>
-      <span class="question">How many quadrants do you wish to inseminate?</span> </br><textarea placeholder="quadrant = 1ration" class="plant" rows="1" cols="25" type="number"></textarea>
-      <button class="quit" v-on:click="saveMenuToggle">Quit Game</button>
-    </div>
+      <div class="input" v-if="input">
+        <span class="question">How many quadrants do you wish to appropriate?</span><br/>
+        <input v-model="inputs.landBuy" placeholder="enter negative to barter" class="landBuy" rows="1" cols="25" type="number"></input><br/>
+        <span class="question">How many rations do you wish to feed your citizens?</span><br/>
+        <input v-model="inputs.bushelFeed" placeholder="each citizen needs 20/year" class="food" rows="1" cols="25" type="number"></input><br/>
+        <span class="question">How many quadrants do you wish to inseminate?</span><br/>
+        <input v-model="inputs.planted" placeholder="quadrant = 1ration" class="plant" rows="1" cols="25" type="number"></input>
+        <button class="quit" v-on:click="saveMenuToggle">Quit Game</button>
+      </div>
     </transition>
+    <threeThousandPeasant></threeThousandPeasant>
+    <button v-bind:class="makeItSoLogic" v-if="makeItSo" v-on:click="turnChange">Make It So!</button>
+    <div v-bind:class="makeItSoHide">Not Allowed</div>
+    <button v-if="input" v-on:click="backReport">Report</button>
     <div class="saveMenu" v-if="saveMenu">
       <div class="saveQuestion" v-if="saveQuestion">
         <h1 class="title">Do you wish to save your progress?</h1>
@@ -41,9 +48,6 @@
         <button class="saveGame" v-on:click="saveGame">Save</button>
       </div>
     </div>
-    <threeThousandPeasant></threeThousandPeasant>
-    <button class="makeIt" v-if="makeItSo" v-on:click="turnChange">Make It So!</button>
-    <button class="reportButton" v-if="input" v-on:click="seeReport">Report</button>
   </div>
 </template>
 
@@ -55,6 +59,21 @@ export default {
   components: {
     'threeThousandPeasant': ThreeThousandPeasant
   },
+  created () {
+    let vue = this
+    this.totalCost = (this.store - parseInt(this.inputs.bushelFeed) - parseInt(this.inputs.planted) - (parseInt(this.inputs.landBuy) * this.landRate))
+    this.plantRule = ((parseInt(this.inputs.planted) / 10) - this.population)
+    this.totalLand = (this.land + parseInt(vue.inputs.landBuy))
+    this.plantable = (this.activeLand - parseInt(this.inputs.planted))
+    document.addEventListener('keyup', function () {
+      vue.totalCost = (vue.store - parseInt(vue.inputs.bushelFeed) - parseInt(vue.inputs.planted) - (parseInt(vue.inputs.landBuy) * vue.landRate))
+      vue.plantRule = ((parseInt(vue.inputs.planted) / 10) - vue.population)
+      vue.totalLand = (vue.land + parseInt(vue.inputs.landBuy))
+      vue.plantable = (vue.activeLand - parseInt(vue.inputs.planted))
+      vue.activeStore = (vue.store - parseInt(vue.inputs.bushelFeed) - parseInt(vue.inputs.planted) - (parseInt(vue.inputs.landBuy) * vue.landRate))
+      vue.activeLand = (vue.land + parseInt(vue.inputs.landBuy))
+    })
+  },
   data () {
     return {
       plague: false,
@@ -64,10 +83,30 @@ export default {
       makeItSo: false,
       saveMenu: false,
       saveQuestion: true,
+      activeStore: 2800,
+      activeLand: 1000,
+      totalCost: 0,
+      plantRule: 0,
+      totalLand: 0,
+      plantable: 0,
       inputs: {
-        landBuy: '',
-        rationFeed: '',
-        inseminated: ''
+        landBuy: 0,
+        bushelFeed: 0,
+        planted: 0
+      }
+    }
+  },
+  computed: {
+    makeItSoLogic: function () {
+      return {
+        allowed: (this.totalCost >= 0) && (this.plantRule <= 0) && (this.totalLand >= 0) && (this.plantable >= 0),
+        hidden: (this.totalCost < 0) || (this.plantRule > 0) || (this.totalLand <= 0) || (this.plantable < 0) || (this.inputs.landBuy === '-') || (this.inputs.planted === '-') || (this.inputs.bushelFeed === '-') || ((this.inputs.landBuy === '') || (this.inputs.planted === '') || (this.inputs.bushelFeed === ''))
+      }
+    },
+    makeItSoHide: function () {
+      return {
+        notAllowed: (this.totalCost < 0) || (this.plantRule > 0) || (this.totalLand <= 0) || (this.plantable < 0) || (this.inputs.landBuy === '-') || (this.inputs.planted === '-') || (this.inputs.bushelFeed === '-') || ((this.inputs.landBuy === '') || (this.inputs.planted === '') || (this.inputs.bushelFeed === '')),
+        hidden: ((this.totalCost >= 0) && (this.plantRule <= 0) && (this.totalLand >= 0) && (this.plantable >= 0))
       }
     }
   },
@@ -78,9 +117,19 @@ export default {
       this.input = true
       this.makeItSo = true
       this.seeReport = true
+      this.activeStore = this.store
+      this.activeLand = this.land
+      this.inputs.landBuy = 0
+      this.inputs.bushelFeed = 0
+      this.inputs.planted = 0
     },
     turnChange: function () {
       this.$emit('turnChange', this.inputs)
+      this.report = true
+      this.resource = false
+      this.input = false
+      this.makeItSo = false
+      this.seeReport = false
     },
     saveMenuToggle: function () {
       this.saveMenu = !this.saveMenu
@@ -100,7 +149,7 @@ export default {
     quitGame: function () {
       this.$router.push('/')
     },
-    seeReport: function () {
+    backReport: function () {
       this.report = true
       this.resource = false
       this.input = false
