@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <h1 class="title">Screen Art Games</h1>
-    <button v-on:click="$router.push('/')">Back</button>
+    <button class="back" v-on:click="$router.push('/')">Back</button>
   </div>
 </template>
 
@@ -27,7 +27,8 @@ export default {
     margin-left: 10%;
     margin-top: 20px;
     border-radius: 14px;
-    background-color: @backgroundColor;
+    border-style: solid;
+    background-color: transparent;
   }
 
   .title {
@@ -37,5 +38,14 @@ export default {
     font-size: 2.4em;
     margin-left: 10%;
     margin-top: 20px;
+    font-family: 'Bungee', cursive;
+    text-shadow: 2px 2px 1px #7071b5;
+  }
+  .back {
+      background-color: transparent;
+      color: #fff;
+      font-size: 1.5em;
+      font-family: 'Bungee', cursive;
+      text-shadow: 2px 2px 1px #7071b5;
   }
 </style>

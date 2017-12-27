@@ -92,11 +92,11 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style scoped lang="less">
 @primary-color:#7071b5;
 @accent-color:#29005d;
 @background-color:#000024;
-@bold-font:'Righteous', cursive;
+@bold-font:'Bungee';
 @light-font:'Aldrich', sans-serif;
 
 .wrapper {
@@ -106,6 +106,7 @@ export default {
   grid-gap: 10px;
   color: #444;
   font-size: 1em;
+  font-family: 'Bungee', cursive;
 }
 
 .box {
@@ -186,7 +187,7 @@ h1 {
   margin-right: auto;
   text-align: center;
   color:@primary-color;
-  font-family: @bold-font;
+  font-family: 'bungee';
   font-size: 3em;
 }
 

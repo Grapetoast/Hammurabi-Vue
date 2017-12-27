@@ -3,14 +3,14 @@
     <h1 class="title">Hammurabi 3000</h1>
     <transition name="fade">
       <div class="report" v-if="report">
-        <strong>Overlord Hammurabi</strong>: I beg to report to you,
+        <strong>Overlord Hammurabi</strong>! I beg to report to you,
         <span v-if="plague">An enemy incursion has swept over your demense! <strong><span class="plagueNumber">{{this.plagueNumber}}</span> Citizens have perished!!</strong></span>
-        In the <strong>Year <span class="year">{{this.year}}</span></strong>,
-        <strong><span class="starved">{{this.starved}}</span></strong> civilians starved.
-        <strong><span class="immigrants">{{this.immigrants}}</span></strong> civilians came to the city.
+        In the <strong>Year <span class="year">{{this.year}}</span></strong>:<br/>
+        <strong><span class="starved">{{this.starved}}</span></strong> civilians starved.<br/>
+        <strong><span class="immigrants">{{this.immigrants}}</span></strong> civilians came to the city.<br/>
         You harvested {{this.harvest}} rations at a rate of {{this.bushelsPerAcre}} rations per quadrant.
         Space crabs ate <strong><span class="spaceCrabs">{{this.rats}}</span></strong> rations.<br/>
-        <button v-on:click="next">Next</button>
+        <button class="nextButton" v-on:click="next">Next</button>
       </div><br/>
     </transition>
     <transition name="fade">
@@ -42,8 +42,8 @@
       </div>
     </div>
     <threeThousandPeasant></threeThousandPeasant>
-    <button v-if="makeItSo" v-on:click="turnChange">Make It So!</button>
-    <button v-if="input" v-on:click="seeReport">Report</button>
+    <button class="makeIt" v-if="makeItSo" v-on:click="turnChange">Make It So!</button>
+    <button class="reportButton" v-if="input" v-on:click="seeReport">Report</button>
   </div>
 </template>
 
@@ -111,6 +111,12 @@ export default {
 </script>
 
 <style scoped lang="less">
+@primary-color:#7071b5;
+@accent-color:#29005d;
+@background-color:#000024;
+@bold-font:'Bungee';
+@light-font:'Aldrich', sans-serif;
+
 .main {
 
 }
@@ -119,6 +125,8 @@ export default {
   text-align: center;
   color: #fff;
   font-size: 2.4em;
+  font-family: @bold-font;
+  text-shadow: 2px 2px 1px #7071b5;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -146,56 +154,60 @@ export default {
 .switch-enter, .switch-leave-to {
   opacity: 0;
 }
-
+.reportButton {
+  border-style: solid;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  margin-left: 35px;
+  height: 30px;
+  width: 40%;
+  font-family: @bold-font;
+}
+.makeIt {
+  margin-left: 12px;
+  border-style: solid;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  height: 30px;
+  width: 40%;
+  font-family: @bold-font;
+}
 .report {
-  font-size: .9em;
+  height: 200px;
+  color: #fff;
+  font-size: 1em;
   padding-top: 15px;
   padding-right: 15px;
   padding-bottom: 15px;
   padding-left: 15px;
   position: relative;
   text-align: center;
-  background-color: #fff;
-  border: 8px solid #29005d;
-  -webkit-border-radius: 30px;
-  -moz-border-radius: 30px;
-  border-radius: 30px;
-  -webkit-box-shadow: 2px 2px 4px #29005d;
-  -moz-box-shadow: 2px 2px 4px #29005d;
-  box-shadow: 2px 2px 4px #29005d;
-}
+  background: rgba(112,113,181,0.5);
+  border: 5px solid #7071b5;
+  font-family: @light-font;
 
-.report:before {
-  content: ' ';
-  position: absolute;
-  width: 0;
-  height: 0;
-  left: 32px;
-  top: 127px;
-  border: 25px solid;
-  border-color: #29005d transparent transparent #29005d;
 }
-
-.report:after {
-  content: ' ';
-  position: absolute;
-  width: 0;
-  height: 0;
-  left: 40px;
-  top: 127px;
-  border: 15px solid;
-  border-color: #fff transparent transparent #fff;
+.nextButton {
+  font-family: @bold-font;
+  background-color: transparent;
+  color: #fff;
+  margin-top: 15px;
+  border-style: solid;
+  font-size: 1.2em;
+  width: 40%;
 }
-
 .resource {
   display: grid;
   grid-template-columns: 30px 1fr 1fr 1fr 30px;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-  background: rgba(180,63,191,0.5);
-  border: 4px solid rgba(180,63,191,1);
+  background: rgba(112,113,181,0.5);
+  border: 4px solid #7071b5;
   border-bottom: 0;
   margin-left: 10px;
   margin-right: 10px;
+  color: #fff;
 }
 
 .population {
@@ -203,6 +215,7 @@ export default {
   grid-column-end: 4;
   grid-row-start: 2;
   grid-row-end: 2;
+
 }
 
 .land {
@@ -227,8 +240,8 @@ export default {
 }
 
 .input {
- background: rgba(180,63,191,0.5);
- border: 4px solid rgba(180,63,191,1);
+ background: rgba(112,113,181,0.5);
+ border: 4px solid #7071b5;
  border-top: 0;
  margin-bottom: 10px;
  margin-left: 10px;
@@ -241,9 +254,25 @@ export default {
   position: absolute;
   bottom: 0;
   left: 0;
-  margin-bottom: 35px;
+  margin-bottom: 20px;
+  width: 80%;
+  height: 30px;
+  border-style: solid;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  margin-left: 35px;
+  font-family: @bold-font;
 }
-
+.question {
+  margin-left: 10px;
+  background-color: transparent;
+  color: #fff;
+  padding-left: 10px;
+}
+.saveQuestion {
+  font-size: .7em;
+}
 .yesSave {
   width: 40%;
   position: absolute;
@@ -252,6 +281,13 @@ export default {
   height: 60px;
   line-height: 60px;
   font-size: 1.6em;
+  border-style: solid;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  font-family: @bold-font;
+  text-shadow: 2px 2px 1px #7071b5;
+  box-shadow: 2px 2px 1px #7071b5;
 }
 
 .noSave {
@@ -262,14 +298,29 @@ export default {
   height: 60px;
   line-height: 60px;
   font-size: 1.6em;
+  border-style: solid;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  font-family: @bold-font;
+  text-shadow: 2px 2px 1px #7071b5;
+  box-shadow: 2px 2px 1px #7071b5;
 }
 
 .saveName {
+  margin-bottom: 30px;
   text-align: center;
   width: 80%;
   height: 1.8em;
   font-size: 1.4em;
   margin-left: 10%;
+  border-style: solid;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  font-family: @bold-font;
+  text-shadow: 2px 2px 1px #7071b5;
+  box-shadow: 2px 2px 1px #7071b5;
 }
 
 .saveGame {
@@ -280,5 +331,12 @@ export default {
   margin-top: 20px;
   font-size: 1.4em;
   margin-left: 10%;
+  border-style: solid;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  font-family: @bold-font;
+  text-shadow: 2px 2px 1px #7071b5;
+  box-shadow: 2px 2px 1px #7071b5;
 }
 </style>
