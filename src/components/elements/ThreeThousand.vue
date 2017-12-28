@@ -4,21 +4,21 @@
     <transition name="fade">
       <div class="report" v-if="report">
         <strong>Overlord Hammurabi</strong>! I beg to report to you,
-        <span v-if="plague">An enemy incursion has swept over your demense! <strong><span class="plagueNumber">{{this.plagueNumber}}</span> Citizens have perished!!</strong></span>
+        <span v-if="plague">An enemy incursion has swept over your demense! <strong><span class="plagueNumber">{{this.plague}}</span> Citizens have perished!!</strong></span>
         In the <strong>Year <span class="year">{{this.year}}</span></strong>:<br/>
         <strong><span class="starved">{{this.starved}}</span></strong> civilians starved.<br/>
         <strong><span class="immigrants">{{this.immigrants}}</span></strong> civilians came to the city.<br/>
         You harvested {{this.harvest}} rations at a rate of {{this.bushelsPerAcre}} rations per quadrant.
         Space crabs ate <strong><span class="spaceCrabs">{{this.rats}}</span></strong> rations.<br/>
         <button class="nextButton" v-on:click="next">Next</button>
-      </div><br/>
+      </div>
     </transition>
     <transition name="fade">
       <div class="resource" v-if="resource">
         <div class="population">Population: {{this.population}}</div>
-        <div class="land">Land: {{this.activeLand}}</div>
-        <div class="rations">Rations: {{this.activeStore}}</div>
-        <div class="landTrade">Landtrade: {{this.landRate}}</div>
+        <div class="land">Land: {{this.land}}</div>
+        <div class="rations">Rations: {{this.rations}}</div>
+        <div class="landTrade">Landtrade: {{this.landTrade}}</div>
       </div>
     </transition>
     <transition name="fade">
@@ -76,7 +76,7 @@ export default {
   },
   data () {
     return {
-      plague: false,
+      plague: 0,
       report: true,
       resource: false,
       input: false,
@@ -89,6 +89,7 @@ export default {
       plantRule: 0,
       totalLand: 0,
       plantable: 0,
+      name: '',
       inputs: {
         landBuy: 0,
         bushelFeed: 0,

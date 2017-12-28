@@ -22,7 +22,7 @@
     <transition name="fade">
       <div class="loadMenu" v-if="loadMenu">
         <h1 class="title">Saves</h1>
-        <button class="save" v-for="save in saves" v-on:click="loadGame(save)">{{save.name}}:{{save.time}}</button>
+        <button class="save" v-for="save in saves" v-on:click="loadGame(save)">{{save.name}}/{{save.time}}</button>
         <button class="back" v-on:click="loadMenuToggle">Back</button>
       </div>
     </transition>
@@ -104,8 +104,8 @@ export default {
       this.gameModeMenu = !this.gameModeMenu
       this.menu = !this.menu
     },
-    loadGame: function (save) {
-      let saveData = [{name: save.name, time: save.time, classic: save.classic, difficulty: save.gameDifficulty}]
+    loadGame: function (gameData) {
+      let saveData = [{name: gameData.name, time: gameData.time, classic: gameData.classicMode, gameDifficulty: gameData.gameDifficulty, population: gameData.population, land: gameData.land, store: gameData.store, year: gameData.year, starved: gameData.starved, starvedTotal: gameData.starvedTotal, rats: gameData.rats, landRate: gameData.landRate, immigrants: gameData.immigrants, bushelsPerAcre: gameData.bushelsPerAcre, harvest: gameData.harvest, plague: gameData.plague}]
       this.$emit('loadGame', saveData)
     },
     loadMenuToggle: function () {
@@ -234,6 +234,7 @@ export default {
     font-size: 1.5em;
   }
   .back {
+    margin-top: 120px;
     background-color: transparent;
     color: #fff;
     font-size: 1.5em;
