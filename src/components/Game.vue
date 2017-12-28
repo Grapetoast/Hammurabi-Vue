@@ -24,6 +24,7 @@ export default {
       gameData: {
         year: 1,
         starved: 0,
+        starvedTotal: 0,
         immigrants: 5,
         population: 100,
         land: 1000,

@@ -16,6 +16,10 @@ var SaveSchema = new mongoose.Schema({
             type: String,
             required: true,
            },
+ starvedTotal: {
+           type: String,
+           required: true,
+          },
   immigrants: {
                 type: String,
                 required: true,

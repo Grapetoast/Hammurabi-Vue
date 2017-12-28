@@ -38,7 +38,7 @@
  })
 
  // tell express that any queries of /example should go to the examples.js file
- app.use("/example", examples);
+ app.use("/save", saves);
 
  // tell the router that any get requests made to / should be sent the index.html
  router.get("/", (req,res) => {

@@ -12,6 +12,7 @@ router.post("/", (req,res) => {
     time: req.body.time,
     year: req.body.year,
     starved: req.body.starved,
+    starvedTotal: req.body.starvedTotal,
     immigrants: req.body.immigrants,
     population: req.body.population,
     land: req.body.land,
