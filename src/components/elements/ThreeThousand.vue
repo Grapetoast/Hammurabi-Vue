@@ -4,14 +4,14 @@
     <transition name="fade">
       <div class="report" v-if="report">
         <strong>Overlord Hammurabi</strong>! I beg to report to you,
-        <span v-if="plague">An enemy incursion has swept over your demense! <strong><span class="plagueNumber">{{this.plagueNumber}}</span> Citizens have perished!!</strong></span>
-        In the <strong>Year <span class="year">{{this.year}}</span></strong>,
-        <strong><span class="starved">{{this.starved}}</span></strong> civilians starved.
-        <strong><span class="immigrants">{{this.immigrants}}</span></strong> civilians came to the city.
-        You harvested <strong><span class="harvest">{{this.harvest}}</span></strong> rations per quadrant.
-        Space crabs ate <strong><span class="spaceCrabs">{{this.spaceCrabs}}</span></strong> rations.<br/>
-        <button v-on:click="next">Next</button>
-      </div><br/>
+        <span v-if="plague">An enemy incursion has swept over your demense! <strong><span class="plagueNumber">{{this.plague}}</span> Citizens have perished!!</strong></span>
+        In the <strong>Year <span class="year">{{this.year}}</span></strong>:<br/>
+        <strong><span class="starved">{{this.starved}}</span></strong> civilians starved.<br/>
+        <strong><span class="immigrants">{{this.immigrants}}</span></strong> civilians came to the city.<br/>
+        You harvested {{this.harvest}} rations at a rate of {{this.bushelsPerAcre}} rations per quadrant.
+        Space crabs ate <strong><span class="spaceCrabs">{{this.rats}}</span></strong> rations.<br/>
+        <button class="nextButton" v-on:click="next">Next</button>
+      </div>
     </transition>
     <transition name="fade">
       <div class="resource" v-if="resource">
@@ -33,9 +33,9 @@
       </div>
     </transition>
     <threeThousandPeasant></threeThousandPeasant>
-    <button v-bind:class="makeItSoLogic" v-if="makeItSo" v-on:click="turnChange">Make It So!</button>
-    <div v-bind:class="makeItSoHide">Not Allowed</div>
-    <button v-if="input" v-on:click="backReport">Report</button>
+    <button class="makeIt" v-bind:class="makeItSoLogic" v-if="makeItSo" v-on:click="turnChange">Make It So!</button>
+    <div  v-bind:class="makeItSoHide">Not Allowed</div>
+    <button class="reportButton" v-if="input" v-on:click="backReport">Report</button>
     <div class="saveMenu" v-if="saveMenu">
       <div class="saveQuestion" v-if="saveQuestion">
         <h1 class="title">Do you wish to save your progress?</h1>
@@ -55,7 +55,7 @@
 import ThreeThousandPeasant from './ThreeThousandPeasant'
 export default {
   name: 'threethousand',
-  props: [ 'year', 'starved', 'immigrants', 'population', 'land', 'bushelsPerAcre', 'rats', 'store', 'landRate' ],
+  props: [ 'year', 'starved', 'immigrants', 'population', 'land', 'harvest', 'bushelsPerAcre', 'rats', 'store', 'landRate' ],
   components: {
     'threeThousandPeasant': ThreeThousandPeasant
   },
@@ -76,21 +76,7 @@ export default {
   },
   data () {
     return {
-      year: 3001,
-      starved: 0,
-      immigrants: 5,
-      population: 100,
-      land: 1000,
-      harvest: 3,
-      spaceCrabs: 200,
-      rationsStore: 2800,
-      landTrade: 22,
-      rations: 2800,
-      starvedTotal: 0,
-      points: 0,
-      landRatio: 10,
-      rationCounter: 2800,
-      plagueNumber: 0,
+      plague: 0,
       report: true,
       resource: false,
       input: false,
@@ -103,6 +89,7 @@ export default {
       plantRule: 0,
       totalLand: 0,
       plantable: 0,
+      name: '',
       inputs: {
         landBuy: 0,
         bushelFeed: 0,
@@ -174,7 +161,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-@primary-color:#7071b5;
+@primary-color: #78138A;
 @accent-color:#29005d;
 @background-color:#000024;
 @bold-font:'Bungee';
@@ -189,7 +176,7 @@ export default {
   color: #fff;
   font-size: 2.4em;
   font-family: @bold-font;
-  text-shadow: 2px 2px 1px #7071b5;
+  text-shadow: 2px 2px 1px #78138A;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -226,6 +213,9 @@ export default {
   height: 30px;
   width: 40%;
   font-family: @bold-font;
+  -webkit-box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+  text-shadow: 2px 2px 1px #78138A;
 }
 .makeIt {
   margin-left: 12px;
@@ -236,8 +226,13 @@ export default {
   height: 30px;
   width: 40%;
   font-family: @bold-font;
+  -webkit-box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+  text-shadow: 2px 2px 1px #78138A;
 }
 .report {
+  margin-left: 10px;
+  width: 300px;
   height: 200px;
   color: #fff;
   font-size: 1em;
@@ -247,9 +242,12 @@ export default {
   padding-left: 15px;
   position: relative;
   text-align: center;
-  background: rgba(112,113,181,0.5);
-  border: 5px solid #7071b5;
+  border-style: solid;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
   font-family: @light-font;
+  text-shadow: 2px 2px 1px #78138A;
 
 }
 .nextButton {
@@ -260,17 +258,21 @@ export default {
   border-style: solid;
   font-size: 1.2em;
   width: 40%;
+  text-shadow: 2px 2px 1px #78138A;
+  -webkit-box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
 }
 .resource {
   display: grid;
   grid-template-columns: 30px 1fr 1fr 1fr 30px;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-  background: rgba(112,113,181,0.5);
-  border: 4px solid #7071b5;
-  border-bottom: 0;
+  border: 2px solid;
   margin-left: 10px;
   margin-right: 10px;
   color: #fff;
+  -webkit-box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+  box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+  text-shadow: 2px 2px 1px #78138A;
 }
 
 .population {
@@ -287,14 +289,33 @@ export default {
   grid-row-start: 2;
   grid-row-end: 2;
 }
-
+.landBuy {
+  -webkit-box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+  box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+  border: 2px solid #fff;
+  background-color: transparent;
+  color: #fff;
+}
 .rations {
   grid-column-start: 2;
   grid-column-end: 4;
   grid-row-start: 4;
   grid-row-end: 4;
 }
-
+.food {
+  -webkit-box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+  box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+  border: 2px solid #fff;
+  background-color: transparent;
+  color: #fff;
+}
+.plant {
+  -webkit-box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+  box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+border: 2px solid #fff;
+background-color: transparent;
+color: #fff;
+}
 .landTrade {
   grid-column-start: 4;
   grid-column-end: 6;
@@ -303,13 +324,14 @@ export default {
 }
 
 .input {
- background: rgba(112,113,181,0.5);
- border: 4px solid #7071b5;
- border-top: 0;
+ border: 2px solid #fff;
  margin-bottom: 10px;
  margin-left: 10px;
  margin-right: 10px;
  padding-bottom: 5px;
+ -webkit-box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+ text-shadow: 2px 2px 1px #78138A;
 }
 
 .quit {
@@ -326,6 +348,9 @@ export default {
   color: #fff;
   margin-left: 35px;
   font-family: @bold-font;
+  -webkit-box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+  text-shadow: 2px 2px 1px #78138A;
 }
 .question {
   margin-left: 10px;
@@ -349,8 +374,7 @@ export default {
   background-color: transparent;
   color: #fff;
   font-family: @bold-font;
-  text-shadow: 2px 2px 1px #7071b5;
-  box-shadow: 2px 2px 1px #7071b5;
+  
 }
 
 .noSave {
@@ -366,8 +390,9 @@ export default {
   background-color: transparent;
   color: #fff;
   font-family: @bold-font;
-  text-shadow: 2px 2px 1px #7071b5;
-  box-shadow: 2px 2px 1px #7071b5;
+  -webkit-box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+  text-shadow: 2px 2px 1px #78138A;
 }
 
 .saveName {
@@ -382,8 +407,9 @@ export default {
   background-color: transparent;
   color: #fff;
   font-family: @bold-font;
-  text-shadow: 2px 2px 1px #7071b5;
-  box-shadow: 2px 2px 1px #7071b5;
+  -webkit-box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+  text-shadow: 2px 2px 1px #78138A;
 }
 
 .saveGame {
@@ -399,7 +425,8 @@ export default {
   background-color: transparent;
   color: #fff;
   font-family: @bold-font;
-  text-shadow: 2px 2px 1px #7071b5;
-  box-shadow: 2px 2px 1px #7071b5;
+  -webkit-box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+  text-shadow: 2px 2px 1px #78138A;
 }
 </style>

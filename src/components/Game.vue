@@ -21,6 +21,20 @@ export default {
   created () {
     this.gameData.classicMode = this.classic
     this.gameData.gameDifficulty = this.difficulty
+    if (this.game[0].year >= 1) {
+      this.gameData.year = this.game[0].year
+      this.gameData.starved = this.game[0].starved
+      this.gameData.starvedTotal = this.game[0].starvedTotal
+      this.gameData.immigrants = this.game[0].immigrants
+      this.gameData.population = this.game[0].population
+      this.gameData.land = this.game[0].land
+      this.gameData.bushelsPerAcre = this.game[0].bushelsPerAcre
+      this.gameData.rats = this.game[0].rats
+      this.gameData.harvest = this.game[0].harvest
+      this.gameData.store = this.game[0].store
+      this.gameData.landRate = this.game[0].landRate
+      this.gameData.plague = this.game[0].plague
+    }
   },
   data () {
     return {
