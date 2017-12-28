@@ -48,9 +48,6 @@
         <button class="saveGame" v-on:click="saveGame">Save</button>
       </div>
     </div>
-    <threeThousandPeasant></threeThousandPeasant>
-    <button v-if="makeItSo" v-on:click="turnChange">Make It So!</button>
-    <button v-if="input" v-on:click="reportView">Report</button>
   </div>
 </template>
 
