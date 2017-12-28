@@ -234,6 +234,7 @@ export default {
     font-size: 1.5em;
   }
   .back {
+    margin-top: 120px;
     background-color: transparent;
     color: #fff;
     font-size: 1.5em;

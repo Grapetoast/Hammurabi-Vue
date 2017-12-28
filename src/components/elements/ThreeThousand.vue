@@ -4,7 +4,7 @@
     <transition name="fade">
       <div class="report" v-if="report">
         <strong>Overlord Hammurabi</strong>! I beg to report to you,
-        <span v-if="plague">An enemy incursion has swept over your demense! <strong><span class="plagueNumber">{{this.plagueNumber}}</span> Citizens have perished!!</strong></span>
+        <span v-if="plague">An enemy incursion has swept over your demense! <strong><span class="plagueNumber">{{this.plague}}</span> Citizens have perished!!</strong></span>
         In the <strong>Year <span class="year">{{this.year}}</span></strong>:<br/>
         <strong><span class="starved">{{this.starved}}</span></strong> civilians starved.<br/>
         <strong><span class="immigrants">{{this.immigrants}}</span></strong> civilians came to the city.<br/>
@@ -16,9 +16,9 @@
     <transition name="fade">
       <div class="resource" v-if="resource">
         <div class="population">Population: {{this.population}}</div>
-        <div class="land">Land: {{this.activeLand}}</div>
-        <div class="rations">Rations: {{this.activeStore}}</div>
-        <div class="landTrade">Landtrade: {{this.landRate}}</div>
+        <div class="land">Land: {{this.land}}</div>
+        <div class="rations">Rations: {{this.rations}}</div>
+        <div class="landTrade">Landtrade: {{this.landTrade}}</div>
       </div>
     </transition>
     <transition name="fade">
@@ -48,6 +48,9 @@
         <button class="saveGame" v-on:click="saveGame">Save</button>
       </div>
     </div>
+    <threeThousandPeasant></threeThousandPeasant>
+    <button v-if="makeItSo" v-on:click="turnChange">Make It So!</button>
+    <button v-if="input" v-on:click="reportView">Report</button>
   </div>
 </template>
 
@@ -76,7 +79,7 @@ export default {
   },
   data () {
     return {
-      plague: false,
+      plague: 0,
       report: true,
       resource: false,
       input: false,
