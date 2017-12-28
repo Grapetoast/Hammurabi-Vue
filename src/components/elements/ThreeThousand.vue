@@ -11,7 +11,7 @@
         You harvested {{this.harvest}} rations at a rate of {{this.bushelsPerAcre}} rations per quadrant.
         Space crabs ate <strong><span class="spaceCrabs">{{this.rats}}</span></strong> rations.<br/>
         <button class="nextButton" v-on:click="next">Next</button>
-      </div><br/>
+      </div>
     </transition>
     <transition name="fade">
       <div class="resource" v-if="resource">
@@ -89,6 +89,7 @@ export default {
       plantRule: 0,
       totalLand: 0,
       plantable: 0,
+      name: '',
       inputs: {
         landBuy: 0,
         bushelFeed: 0,

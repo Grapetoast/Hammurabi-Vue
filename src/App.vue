@@ -17,7 +17,7 @@ export default {
       classic: false,
       gameDifficulty: 'easy',
       game: [],
-      saves: [{name: 'save1', time: '1122pm', classic: true, gameDifficulty: 'easy'}]
+      saves: []
     }
   },
   methods: {
@@ -34,7 +34,7 @@ export default {
       this.$router.push('/game')
     },
     saveGame: function (gameData) {
-      this.saves.push({name: gameData.name, time: gameData.time, classic: gameData.classicMode, gameDifficulty: gameData.gameDifficulty, population: gameData.population, land: gameData.land, store: gameData.store, year: gameData.year, starved: gameData.starved, rats: gameData.rats, landRate: gameData.landRate, immigrants: gameData.immigrants, bushelsPerAcre: gameData.bushelsPerAcre})
+      this.saves.push({name: gameData.name, time: gameData.time, classic: gameData.classicMode, gameDifficulty: gameData.gameDifficulty, population: gameData.population, land: gameData.land, store: gameData.store, year: gameData.year, starved: gameData.starved, starvedTotal: gameData.starvedTotal, rats: gameData.rats, landRate: gameData.landRate, immigrants: gameData.immigrants, bushelsPerAcre: gameData.bushelsPerAcre, harvest: gameData.harvest, plague: gameData.plague})
       console.log(this.saves)
       this.$router.push('/')
     },
