@@ -160,13 +160,13 @@ export default {
 </script>
 
 <style scoped lang="less">
-  @backgroundColor: #7071b5;
+  @backgroundColor: #78138A;
   @accentColor: #29005d;
   .main {
     height: 100%;
     width: 100%;
     font-family: 'Bungee', cursive;
-    text-shadow: 2px 2px 1px #7071b5;
+    text-shadow: 2px 2px 1px #78138A;
   }
 
   .title {
@@ -178,7 +178,7 @@ export default {
     top: 20px;
     left: 0;
     right: 0;
-    text-shadow: 2px 2px 1px #7071b5;
+    text-shadow: 2px 2px 2px #78138A;
   }
 
   .newGame {
@@ -253,8 +253,9 @@ export default {
     margin-top: 20px;
     border-style: solid;
     border-radius: 8px;
-    text-shadow: 2px 2px 1px #7071b5;
-    box-shadow: 2px 2px 1px #7071b5;
+    text-shadow: 2px 2px 1px #78138A;
+    -webkit-box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+  box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
   }
 
   .fade-enter-active, .fade-leave-active {

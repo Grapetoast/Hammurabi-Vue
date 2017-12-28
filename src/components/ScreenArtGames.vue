@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-  @backgroundColor: #7071b5;
+  @backgroundColor: #78138A;
   @accentColor: #29005d;
 
   button {
@@ -39,13 +39,15 @@ export default {
     margin-left: 10%;
     margin-top: 20px;
     font-family: 'Bungee', cursive;
-    text-shadow: 2px 2px 1px #7071b5;
+    text-shadow: 2px 2px 1px #78138A;
   }
   .back {
       background-color: transparent;
       color: #fff;
       font-size: 1.5em;
       font-family: 'Bungee', cursive;
-      text-shadow: 2px 2px 1px #7071b5;
+      text-shadow: 2px 2px 1px #78138A;
+      -webkit-box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+    box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
   }
 </style>
