@@ -11,7 +11,7 @@
       Rats ate {{this.rats}} bushels.
       You now have {{this.store}} bushels in store.
       Land is trading at {{this.landRate}} bushels per acre.
-      <button class="endReport" v-on:click="report = false">Next</button>
+      <button class="endReport" v-on:click="next">Next</button>
     </div>
     <div class="game" v-if="!report && !saveMenu">
       <h1 class="title">Classic Hammurabi</h1>
@@ -22,10 +22,11 @@
         <div class="landRate">{{this.landRate}} Bushels/Acre</div>
       </div>
       <div class="gameInputs">
-        <input class="landBuy" v-model="inputs.landBuy" placeholder="Land to trade"></input>
-        <input class="bushelFeed" v-model="inputs.bushelFeed" placeholder="Bushels to feed Citizens"></input>
-        <input class="planted" v-model="inputs.planted" placeholder="Bushels to plant"></input><br/>
-        <button class="makeItSo" v-on:click="turnChange">Make it So!</button>
+        <input class="landBuy" v-model="inputs.landBuy" type="number" placeholder="Land to trade"></input>
+        <input class="bushelFeed" v-model="inputs.bushelFeed" type="number" placeholder="Bushels to feed Citizens"></input>
+        <input class="planted" v-model="inputs.planted" type="number" placeholder="Bushels to plant"></input><br/>
+        <button v-bind:class="makeItSo" v-on:click="turnChange">Make it So!</button>
+        <div v-bind:class="makeItSoHide">Not Allowed</div>
         <button class="quit" v-on:click="saveMenuToggle">Quit Game</button>
       </div>
     </div>
@@ -48,6 +49,21 @@
 export default {
   name: 'classic',
   props: [ 'year', 'starved', 'immigrants', 'population', 'land', 'harvest', 'bushelsPerAcre', 'rats', 'store', 'landRate' ],
+  created () {
+    let vue = this
+    this.totalCost = (this.store - parseInt(this.inputs.bushelFeed) - parseInt(this.inputs.planted) - (parseInt(this.inputs.landBuy) * this.landRate))
+    this.plantRule = ((parseInt(this.inputs.planted) / 10) - this.population)
+    this.totalLand = (this.land + parseInt(vue.inputs.landBuy))
+    this.plantable = (this.activeLand - parseInt(this.inputs.planted))
+    document.addEventListener('keyup', function () {
+      vue.totalCost = (vue.store - parseInt(vue.inputs.bushelFeed) - parseInt(vue.inputs.planted) - (parseInt(vue.inputs.landBuy) * vue.landRate))
+      vue.plantRule = ((parseInt(vue.inputs.planted) / 10) - vue.population)
+      vue.totalLand = (vue.land + parseInt(vue.inputs.landBuy))
+      vue.plantable = (vue.activeLand - parseInt(vue.inputs.planted))
+      vue.activeStore = (vue.store - parseInt(vue.inputs.bushelFeed) - parseInt(vue.inputs.planted) - (parseInt(vue.inputs.landBuy) * vue.landRate))
+      vue.activeLand = (vue.land + parseInt(vue.inputs.landBuy))
+    })
+  },
   data () {
     return {
       name: '',
@@ -56,16 +72,43 @@ export default {
       report: true,
       activeStore: 2800,
       activeLand: 1000,
+      totalCost: 0,
+      plantRule: 0,
+      totalLand: 0,
+      plantable: 0,
       inputs: {
-        landBuy: '',
-        bushelFeed: '',
-        planted: ''
+        landBuy: 0,
+        bushelFeed: 0,
+        planted: 0
+      }
+    }
+  },
+  computed: {
+    makeItSo: function () {
+      return {
+        allowed: (this.totalCost >= 0) && (this.plantRule <= 0) && (this.totalLand >= 0) && (this.plantable >= 0),
+        hidden: (this.totalCost < 0) || (this.plantRule > 0) || (this.totalLand <= 0) || (this.plantable < 0) || (this.inputs.landBuy === '-') || (this.inputs.planted === '-') || (this.inputs.bushelFeed === '-') || ((this.inputs.landBuy === '') || (this.inputs.planted === '') || (this.inputs.bushelFeed === ''))
+      }
+    },
+    makeItSoHide: function () {
+      return {
+        notAllowed: (this.totalCost < 0) || (this.plantRule > 0) || (this.totalLand <= 0) || (this.plantable < 0) || (this.inputs.landBuy === '-') || (this.inputs.planted === '-') || (this.inputs.bushelFeed === '-') || ((this.inputs.landBuy === '') || (this.inputs.planted === '') || (this.inputs.bushelFeed === '')),
+        hidden: ((this.totalCost >= 0) && (this.plantRule <= 0) && (this.totalLand >= 0) && (this.plantable >= 0))
       }
     }
   },
   methods: {
+    next: function () {
+      this.activeStore = this.store
+      this.activeLand = this.land
+      this.inputs.landBuy = 0
+      this.inputs.bushelFeed = 0
+      this.inputs.planted = 0
+      this.report = false
+    },
     turnChange: function () {
       this.$emit('turnChange', this.inputs)
+      this.report = true
     },
     saveMenuToggle: function () {
       this.saveMenu = !this.saveMenu
@@ -138,5 +181,9 @@ export default {
     margin-top: 20px;
     font-size: 1.4em;
     margin-left: 10%;
+  }
+
+  .hidden {
+    display: none;
   }
 </style>

@@ -3,7 +3,7 @@
     <h1 class="title">Hammurabi 3000</h1>
     <transition name="fade">
       <div class="report" v-if="report">
-        <strong>Overlord Hammurabi</strong>: I beg to report to you,
+        <strong>Overlord Hammurabi</strong>! I beg to report to you,
         <span v-if="plague">An enemy incursion has swept over your demense! <strong><span class="plagueNumber">{{this.plagueNumber}}</span> Citizens have perished!!</strong></span>
         In the <strong>Year <span class="year">{{this.year}}</span></strong>,
         <strong><span class="starved">{{this.starved}}</span></strong> civilians starved.
@@ -22,13 +22,20 @@
       </div>
     </transition>
     <transition name="fade">
-    <div class="input" v-if="input">
-      <span class="question">How many quadrants do you wish to appropriate?</span> </br><textarea placeholder="enter negative to barter" class="landBuy" rows="1" cols="25" type="number"></textarea></br>
-      <span class="question">How many rations do you wish to feed your citizens?</span> </br><textarea placeholder="each citizen needs 20/year" class="food" rows="1" cols="25" type="number"></textarea></br>
-      <span class="question">How many quadrants do you wish to inseminate?</span> </br><textarea placeholder="quadrant = 1ration" class="plant" rows="1" cols="25" type="number"></textarea>
-      <button class="quit" v-on:click="saveMenuToggle">Quit Game</button>
-    </div>
+      <div class="input" v-if="input">
+        <span class="question">How many quadrants do you wish to appropriate?</span><br/>
+        <input v-model="inputs.landBuy" placeholder="enter negative to barter" class="landBuy" rows="1" cols="25" type="number"></input><br/>
+        <span class="question">How many rations do you wish to feed your citizens?</span><br/>
+        <input v-model="inputs.bushelFeed" placeholder="each citizen needs 20/year" class="food" rows="1" cols="25" type="number"></input><br/>
+        <span class="question">How many quadrants do you wish to inseminate?</span><br/>
+        <input v-model="inputs.planted" placeholder="quadrant = 1ration" class="plant" rows="1" cols="25" type="number"></input>
+        <button class="quit" v-on:click="saveMenuToggle">Quit Game</button>
+      </div>
     </transition>
+    <threeThousandPeasant></threeThousandPeasant>
+    <button v-bind:class="makeItSoLogic" v-if="makeItSo" v-on:click="turnChange">Make It So!</button>
+    <div v-bind:class="makeItSoHide">Not Allowed</div>
+    <button v-if="input" v-on:click="backReport">Report</button>
     <div class="saveMenu" v-if="saveMenu">
       <div class="saveQuestion" v-if="saveQuestion">
         <h1 class="title">Do you wish to save your progress?</h1>
@@ -55,6 +62,21 @@ export default {
   components: {
     'threeThousandPeasant': ThreeThousandPeasant
   },
+  created () {
+    let vue = this
+    this.totalCost = (this.store - parseInt(this.inputs.bushelFeed) - parseInt(this.inputs.planted) - (parseInt(this.inputs.landBuy) * this.landRate))
+    this.plantRule = ((parseInt(this.inputs.planted) / 10) - this.population)
+    this.totalLand = (this.land + parseInt(vue.inputs.landBuy))
+    this.plantable = (this.activeLand - parseInt(this.inputs.planted))
+    document.addEventListener('keyup', function () {
+      vue.totalCost = (vue.store - parseInt(vue.inputs.bushelFeed) - parseInt(vue.inputs.planted) - (parseInt(vue.inputs.landBuy) * vue.landRate))
+      vue.plantRule = ((parseInt(vue.inputs.planted) / 10) - vue.population)
+      vue.totalLand = (vue.land + parseInt(vue.inputs.landBuy))
+      vue.plantable = (vue.activeLand - parseInt(vue.inputs.planted))
+      vue.activeStore = (vue.store - parseInt(vue.inputs.bushelFeed) - parseInt(vue.inputs.planted) - (parseInt(vue.inputs.landBuy) * vue.landRate))
+      vue.activeLand = (vue.land + parseInt(vue.inputs.landBuy))
+    })
+  },
   data () {
     return {
       year: 3001,
@@ -78,10 +100,30 @@ export default {
       makeItSo: false,
       saveMenu: false,
       saveQuestion: true,
+      activeStore: 2800,
+      activeLand: 1000,
+      totalCost: 0,
+      plantRule: 0,
+      totalLand: 0,
+      plantable: 0,
       inputs: {
-        landBuy: '',
-        rationFeed: '',
-        inseminated: ''
+        landBuy: 0,
+        bushelFeed: 0,
+        planted: 0
+      }
+    }
+  },
+  computed: {
+    makeItSoLogic: function () {
+      return {
+        allowed: (this.totalCost >= 0) && (this.plantRule <= 0) && (this.totalLand >= 0) && (this.plantable >= 0),
+        hidden: (this.totalCost < 0) || (this.plantRule > 0) || (this.totalLand <= 0) || (this.plantable < 0) || (this.inputs.landBuy === '-') || (this.inputs.planted === '-') || (this.inputs.bushelFeed === '-') || ((this.inputs.landBuy === '') || (this.inputs.planted === '') || (this.inputs.bushelFeed === ''))
+      }
+    },
+    makeItSoHide: function () {
+      return {
+        notAllowed: (this.totalCost < 0) || (this.plantRule > 0) || (this.totalLand <= 0) || (this.plantable < 0) || (this.inputs.landBuy === '-') || (this.inputs.planted === '-') || (this.inputs.bushelFeed === '-') || ((this.inputs.landBuy === '') || (this.inputs.planted === '') || (this.inputs.bushelFeed === '')),
+        hidden: ((this.totalCost >= 0) && (this.plantRule <= 0) && (this.totalLand >= 0) && (this.plantable >= 0))
       }
     }
   },
@@ -92,9 +134,19 @@ export default {
       this.input = true
       this.makeItSo = true
       this.seeReport = true
+      this.activeStore = this.store
+      this.activeLand = this.land
+      this.inputs.landBuy = 0
+      this.inputs.bushelFeed = 0
+      this.inputs.planted = 0
     },
     turnChange: function () {
       this.$emit('turnChange', this.inputs)
+      this.report = true
+      this.resource = false
+      this.input = false
+      this.makeItSo = false
+      this.seeReport = false
     },
     saveMenuToggle: function () {
       this.saveMenu = !this.saveMenu
@@ -114,7 +166,7 @@ export default {
     quitGame: function () {
       this.$router.push('/')
     },
-    seeReport: function () {
+    backReport: function () {
       this.report = true
       this.resource = false
       this.input = false
@@ -125,6 +177,12 @@ export default {
 </script>
 
 <style scoped lang="less">
+@primary-color:#7071b5;
+@accent-color:#29005d;
+@background-color:#000024;
+@bold-font:'Bungee';
+@light-font:'Aldrich', sans-serif;
+
 .main {
 
 }
@@ -133,6 +191,8 @@ export default {
   text-align: center;
   color: #fff;
   font-size: 2.4em;
+  font-family: @bold-font;
+  text-shadow: 2px 2px 1px #7071b5;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -160,56 +220,60 @@ export default {
 .switch-enter, .switch-leave-to {
   opacity: 0;
 }
-
+.reportButton {
+  border-style: solid;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  margin-left: 35px;
+  height: 30px;
+  width: 40%;
+  font-family: @bold-font;
+}
+.makeIt {
+  margin-left: 12px;
+  border-style: solid;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  height: 30px;
+  width: 40%;
+  font-family: @bold-font;
+}
 .report {
-  font-size: .9em;
+  height: 200px;
+  color: #fff;
+  font-size: 1em;
   padding-top: 15px;
   padding-right: 15px;
   padding-bottom: 15px;
   padding-left: 15px;
   position: relative;
   text-align: center;
-  background-color: #fff;
-  border: 8px solid #29005d;
-  -webkit-border-radius: 30px;
-  -moz-border-radius: 30px;
-  border-radius: 30px;
-  -webkit-box-shadow: 2px 2px 4px #29005d;
-  -moz-box-shadow: 2px 2px 4px #29005d;
-  box-shadow: 2px 2px 4px #29005d;
-}
+  background: rgba(112,113,181,0.5);
+  border: 5px solid #7071b5;
+  font-family: @light-font;
 
-.report:before {
-  content: ' ';
-  position: absolute;
-  width: 0;
-  height: 0;
-  left: 32px;
-  top: 127px;
-  border: 25px solid;
-  border-color: #29005d transparent transparent #29005d;
 }
-
-.report:after {
-  content: ' ';
-  position: absolute;
-  width: 0;
-  height: 0;
-  left: 40px;
-  top: 127px;
-  border: 15px solid;
-  border-color: #fff transparent transparent #fff;
+.nextButton {
+  font-family: @bold-font;
+  background-color: transparent;
+  color: #fff;
+  margin-top: 15px;
+  border-style: solid;
+  font-size: 1.2em;
+  width: 40%;
 }
-
 .resource {
   display: grid;
   grid-template-columns: 30px 1fr 1fr 1fr 30px;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-  background: rgba(180,63,191,0.5);
-  border: 4px solid rgba(180,63,191,1);
+  background: rgba(112,113,181,0.5);
+  border: 4px solid #7071b5;
   border-bottom: 0;
   margin-left: 10px;
   margin-right: 10px;
+  color: #fff;
 }
 
 .population {
@@ -217,6 +281,7 @@ export default {
   grid-column-end: 4;
   grid-row-start: 2;
   grid-row-end: 2;
+
 }
 
 .land {
@@ -241,8 +306,8 @@ export default {
 }
 
 .input {
- background: rgba(180,63,191,0.5);
- border: 4px solid rgba(180,63,191,1);
+ background: rgba(112,113,181,0.5);
+ border: 4px solid #7071b5;
  border-top: 0;
  margin-bottom: 10px;
  margin-left: 10px;
@@ -255,9 +320,25 @@ export default {
   position: absolute;
   bottom: 0;
   left: 0;
-  margin-bottom: 35px;
+  margin-bottom: 20px;
+  width: 80%;
+  height: 30px;
+  border-style: solid;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  margin-left: 35px;
+  font-family: @bold-font;
 }
-
+.question {
+  margin-left: 10px;
+  background-color: transparent;
+  color: #fff;
+  padding-left: 10px;
+}
+.saveQuestion {
+  font-size: .7em;
+}
 .yesSave {
   width: 40%;
   position: absolute;
@@ -266,6 +347,13 @@ export default {
   height: 60px;
   line-height: 60px;
   font-size: 1.6em;
+  border-style: solid;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  font-family: @bold-font;
+  text-shadow: 2px 2px 1px #7071b5;
+  box-shadow: 2px 2px 1px #7071b5;
 }
 
 .noSave {
@@ -276,14 +364,29 @@ export default {
   height: 60px;
   line-height: 60px;
   font-size: 1.6em;
+  border-style: solid;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  font-family: @bold-font;
+  text-shadow: 2px 2px 1px #7071b5;
+  box-shadow: 2px 2px 1px #7071b5;
 }
 
 .saveName {
+  margin-bottom: 30px;
   text-align: center;
   width: 80%;
   height: 1.8em;
   font-size: 1.4em;
   margin-left: 10%;
+  border-style: solid;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  font-family: @bold-font;
+  text-shadow: 2px 2px 1px #7071b5;
+  box-shadow: 2px 2px 1px #7071b5;
 }
 
 .saveGame {
@@ -294,5 +397,12 @@ export default {
   margin-top: 20px;
   font-size: 1.4em;
   margin-left: 10%;
+  border-style: solid;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #fff;
+  font-family: @bold-font;
+  text-shadow: 2px 2px 1px #7071b5;
+  box-shadow: 2px 2px 1px #7071b5;
 }
 </style>

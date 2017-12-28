@@ -29,7 +29,7 @@
     <transition name="fade">
       <div class="gameModeMenu" v-if="gameModeMenu">
         <h1 class="title">Game Mode</h1>
-        <button class="3000" v-on:click="newGame(false)">Hammurabi 3000</button>
+        <button class="threeThousand" v-on:click="newGame(false)">Hammurabi 3000</button>
         <button class="classic" v-on:click="newGame(true)">Classic Hammurabi</button>
         <div class="slider">
           <div class="leftButton" v-on:click="sliderLeft">&#10094;</div>
@@ -165,39 +165,84 @@ export default {
   .main {
     height: 100%;
     width: 100%;
+    font-family: 'Bungee', cursive;
+    text-shadow: 2px 2px 1px #7071b5;
   }
 
   .title {
     text-align: center;
     color: #fff;
     width: 100%;
-    font-size: 2.4em;
+    font-size: 2em;
     position: absolute;
     top: 20px;
     left: 0;
     right: 0;
+    text-shadow: 2px 2px 1px #7071b5;
   }
 
   .newGame {
     margin-top: 120px;
+    background-color: transparent;
+    color: #fff;
   }
-
+  .loadGame {
+    background-color: transparent;
+    color: #fff;
+  }
+  .options {
+    background-color: transparent;
+    color: #fff;
+  }
+  .screenArtGames {
+    background-color: transparent;
+    color: #fff;
+    font-size: 1.2em;
+  }
   .gameModeMenu {
     margin-top: 120px;
+    color: #fff;
   }
 
   .save:first-of-type {
     margin-top: 120px;
+    color: #fff;
   }
 
   .audio {
     margin-top: 120px;
+    color: #fff;
   }
 
   .music {
-
+    background-color: transparent;
+    color: #fff;
+    font-size: 1.5em;
   }
-
+  .threeThousand {
+    background-color: transparent;
+    color: #fff;
+  }
+  .classic {
+    background-color: transparent;
+    color: #fff;
+    font-size: 1.2em;
+  }
+  .audio {
+    background-color: transparent;
+    color: #fff;
+    font-size: 1.5em;
+  }
+  .back {
+    background-color: transparent;
+    color: #fff;
+    font-size: 1.5em;
+  }
+  .save {
+    background-color: transparent;
+    color: #fff;
+    font-size: 1.5em;
+  }
   button {
     text-align: center;
     width: 80%;
@@ -206,8 +251,10 @@ export default {
     font-size: 1.5em;
     margin-left: 10%;
     margin-top: 20px;
-    border-radius: 14px;
-    background-color: @backgroundColor;
+    border-style: solid;
+    border-radius: 8px;
+    text-shadow: 2px 2px 1px #7071b5;
+    box-shadow: 2px 2px 1px #7071b5;
   }
 
   .fade-enter-active, .fade-leave-active {
@@ -245,29 +292,31 @@ export default {
     text-align: center;
     line-height: 80px;
     margin-left: 10%;
-    margin-top: 20px;
+    margin-top: 90px;
     border-radius: 14px;
-    font-size: 1em;
-    background-color: @backgroundColor;
+    font-size: 1.4em;
+    background-color: transparent;
   }
 
   .leftButton {
     grid-column: 1;
     grid-row: 1;
     z-index: 3;
+    font-size: 2em;
   }
 
   .rightButton {
     grid-column: 5;
     grid-row: 1;
     z-index: 3;
+    font-size: 2em;
   }
 
   .centerSlider {
     grid-column: 3;
     grid-row: 1;
-  }
 
+  }
   .hidden {
     display: none;
   }

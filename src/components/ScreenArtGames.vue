@@ -8,7 +8,7 @@
       <div v-if="wrongInput">Wrong Username/Password</div>
       <button class="signIn" v-on:click="submit()">Sign - in</button>
     </div>
-    <button v-on:click="$router.push('/')">Back</button>
+    <button class="back" v-on:click="$router.push('/')">Back</button>
   </div>
 </template>
 
@@ -68,12 +68,34 @@ button {
   background-color: @backgroundColor;
 }
 
-.title {
-  text-align: center;
-  color: #fff;
-  width: 80%;
-  font-size: 2.4em;
-  margin-left: 10%;
-  margin-top: 20px;
-}
+  button {
+    text-align: center;
+    width: 80%;
+    height: 80px;
+    line-height: 80px;
+    font-size: 1.5em;
+    margin-left: 10%;
+    margin-top: 20px;
+    border-radius: 14px;
+    border-style: solid;
+    background-color: transparent;
+  }
+
+  .title {
+    text-align: center;
+    color: #fff;
+    width: 80%;
+    font-size: 2.4em;
+    margin-left: 10%;
+    margin-top: 20px;
+    font-family: 'Bungee', cursive;
+    text-shadow: 2px 2px 1px #7071b5;
+  }
+  .back {
+      background-color: transparent;
+      color: #fff;
+      font-size: 1.5em;
+      font-family: 'Bungee', cursive;
+      text-shadow: 2px 2px 1px #7071b5;
+  }
 </style>
