@@ -16,9 +16,9 @@
     <transition name="fade">
       <div class="resource" v-if="resource">
         <div class="population">Population: {{this.population}}</div>
-        <div class="land">Land: {{this.land}}</div>
-        <div class="rations">Rations: {{this.rations}}</div>
-        <div class="landTrade">Landtrade: {{this.landTrade}}</div>
+        <div class="land">Land: {{this.activeLand}}</div>
+        <div class="rations">Rations: {{this.activeStore}}</div>
+        <div class="landTrade">Landtrade: {{this.landRate}}</div>
       </div>
     </transition>
     <transition name="fade">
@@ -374,7 +374,7 @@ box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
   background-color: transparent;
   color: #fff;
   font-family: @bold-font;
-  
+
 }
 
 .noSave {
