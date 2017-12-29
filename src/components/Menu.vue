@@ -105,7 +105,7 @@ export default {
       this.menu = !this.menu
     },
     loadGame: function (gameData) {
-      let saveData = [{name: gameData.name, time: gameData.time, classic: gameData.classicMode, gameDifficulty: gameData.gameDifficulty, population: gameData.population, land: gameData.land, store: gameData.store, year: gameData.year, starved: gameData.starved, starvedTotal: gameData.starvedTotal, rats: gameData.rats, landRate: gameData.landRate, immigrants: gameData.immigrants, bushelsPerAcre: gameData.bushelsPerAcre, harvest: gameData.harvest, plague: gameData.plague}]
+      let saveData = [{name: gameData.name, time: gameData.time, classic: gameData.classic, gameDifficulty: gameData.gameDifficulty, population: gameData.population, land: gameData.land, store: gameData.store, year: gameData.year, starved: gameData.starved, starvedTotal: gameData.starvedTotal, rats: gameData.rats, landRate: gameData.landRate, immigrants: gameData.immigrants, bushelsPerAcre: gameData.bushelsPerAcre, harvest: gameData.harvest, plague: gameData.plague}]
       this.$emit('loadGame', saveData)
     },
     loadMenuToggle: function () {
@@ -256,7 +256,7 @@ export default {
     border-radius: 8px;
     text-shadow: 2px 2px 1px #78138A;
     -webkit-box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
-  box-shadow: 0 0 5px 1px #78138A, 0 0 5px 1px #78138A inset;
+    box-shadow: 0 0 5px 3px #78138A, 0 0 5px 3px #78138A inset;
   }
 
   .fade-enter-active, .fade-leave-active {

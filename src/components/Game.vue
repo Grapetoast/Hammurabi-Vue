@@ -39,6 +39,19 @@ export default {
   data () {
     return {
       victory: false,
+      defeat: false,
+      maxStarved: 50,
+      plagueProbDenom: 20,
+      plagueProbNum: 17,
+      plagueLoss: 0.33,
+      maxImmigrants: 10,
+      landRateMin: 17,
+      landRateRange: 9,
+      maxBushelsPerAcre: 8,
+      minBushelsPerAcre: 2,
+      popFeed: 20,
+      ratsMaxTake: .2,
+      winYear: 10,
       gameData: {
         year: 1,
         starved: 0,
@@ -62,38 +75,38 @@ export default {
   methods: {
     turnChange: function (inputs) {
       this.gameData.year++
-      if (Math.floor(Math.random() * 20) >= 17) {
+      if (Math.floor(Math.random() * this.plagueProbDenom) >= this.plagueProbNum) {
         this.gameData.plague = true
-        this.gameData.population = this.gameData.population - (this.gameData.population * Math.floor(Math.random() * 0.33))
+        this.gameData.population = this.gameData.population - (this.gameData.population * Math.floor(Math.random() * this.plagueLoss))
       }
       else {
         this.gameData.plague = false
       }
-      if (inputs.bushelFeed / 20 >= this.gameData.population) {
+      if (inputs.bushelFeed / this.popFeed >= this.gameData.population) {
         this.gameData.starved = 0
         this.gameData.store = this.gameData.store - inputs.bushelFeed
       }
       else {
-        this.gameData.starved = this.gameData.population - (inputs.bushelFeed / 20)
+        this.gameData.starved = this.gameData.population - (inputs.bushelFeed / this.popFeed)
         this.gameData.starvedTotal = this.gameData.starvedTotal + this.gameData.starved
-        if (this.gameData.starvedTotal >= 50) {
-          this.victory = true
+        if (this.gameData.starvedTotal >= this.maxStarved) {
+          this.defeat = true
         }
         this.gameData.population = this.gameData.population - this.gameData.starved
         this.gameData.store = this.gameData.store - inputs.bushelFeed
       }
-      this.gameData.immigrants = Math.floor(Math.random() * 10)
+      this.gameData.immigrants = Math.floor(Math.random() * this.maxImmigrants)
       this.gameData.population = this.gameData.population + this.gameData.immigrants
       if (inputs.landBuy !== 0) {
         this.gameData.land = parseInt(this.gameData.land) + parseInt(inputs.landBuy)
       }
-      this.gameData.landRate = Math.floor(Math.random() * 9) + 17
-      this.gameData.bushelsPerAcre = (Math.floor(Math.random() * 8) + 1)
+      this.gameData.landRate = Math.floor(Math.random() * this.landRateRange) + this.landRateMin
+      this.gameData.bushelsPerAcre = (Math.floor(Math.random() * this.maxBushelsPerAcre) + this.minBushelsPerAcre)
       this.gameData.harvest = inputs.planted * this.gameData.bushelsPerAcre
       this.gameData.store = this.gameData.store + this.gameData.harvest - inputs.planted
-      this.gameData.rats = Math.floor((Math.random() * 0.2) * this.gameData.store)
+      this.gameData.rats = Math.floor((Math.random() * this.ratsMaxTake) * this.gameData.store)
       this.gameData.store = this.gameData.store - this.gameData.rats
-      if (this.gameData.year >= 11) {
+      if (this.gameData.year >= this.winYear) {
         this.victory = true
       }
     },

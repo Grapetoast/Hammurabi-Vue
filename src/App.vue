@@ -42,7 +42,7 @@ export default {
       if (game !== null) {
         this.game = game
         this.classic = game[0].classic
-        this.gameDifficulty = game[0].difficulty
+        this.gameDifficulty = game[0].gameDifficulty
       }
       this.$router.push('/game')
     },
